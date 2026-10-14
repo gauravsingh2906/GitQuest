@@ -54,7 +54,7 @@ fun GitQuestScreen() {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "GitQuest - Revert Practice",
+            text = "GitQuest",
             style = MaterialTheme.typography.headlineLarge
         )
 
