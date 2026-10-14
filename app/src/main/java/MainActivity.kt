@@ -35,6 +35,7 @@ class MainActivity : ComponentActivity() {
                     GitQuestScreen()
                     print("Broken screen")
                     print("Added in feature/taskCounter branch")
+                    print("Added in feature/dark theme branch")
                 }
             }
         }
