@@ -54,7 +54,7 @@ fun GitQuestScreen() {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "GitQuest - Dark Theme Branch",
+            text = "GitQuest - Changed on GitHub",
             style = MaterialTheme.typography.headlineLarge
         )
 
