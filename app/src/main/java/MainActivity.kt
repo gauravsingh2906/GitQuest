@@ -33,7 +33,6 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize()
                 ) {
                     GitQuestScreen()
-                    print("Added for git rebase now this line will update in feature/dark-theme")
                     print("Broken screen")
                     print("Added in feature/taskCounter branch")
                     print("Added in feature/dark theme branch")
