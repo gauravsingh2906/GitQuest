@@ -33,6 +33,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize()
                 ) {
                     GitQuestScreen()
+                    println("Mater has Commit D")
                     print("Broken screen")
                     print("Added in feature/taskCounter branch")
                     print("Added in feature/dark theme branch")
