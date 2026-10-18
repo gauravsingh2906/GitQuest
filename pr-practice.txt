@@ -9,3 +9,5 @@ git log --oneline origin/practice/pr-demo
 
 
 Shows commits in your locally recorded view of that remote branch. Run git fetch origin first if you want to refresh it.
+
+For check git log
