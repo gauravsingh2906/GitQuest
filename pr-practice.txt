@@ -1,1 +1,13 @@
 Pull request practice: add a feature and request review.
+
+Added from git pr branch from git side.
+Another line
+
+
+3. Commits of one specific remote-tracking branch
+git log --oneline origin/practice/pr-demo
+
+
+Shows commits in your locally recorded view of that remote branch. Run git fetch origin first if you want to refresh it.
+
+For check git log
