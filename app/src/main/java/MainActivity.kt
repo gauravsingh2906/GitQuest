@@ -33,6 +33,9 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize()
                 ) {
                     GitQuestScreen()
+                    print("1 First line for checking git rebase")
+                    print("2 Second line for checking git rebase")
+                    print("3 Third line for checking git rebase")
                     println("Mater has Commit D")
                     print("Broken screen")
                     print("Added in feature/taskCounter branch")
