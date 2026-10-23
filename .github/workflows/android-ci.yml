@@ -26,6 +26,7 @@ jobs:
           distribution: temurin
           java-version: '21'
 
+
       - name: Locate Android SDK tools and install API 37
         shell: bash
         run: |
@@ -39,7 +40,6 @@ jobs:
 
           echo "Using SDK manager: $SDKMANAGER"
 
-          # Ignore yes's broken-pipe status, but preserve sdkmanager's result.
           set +o pipefail
           if yes | "$SDKMANAGER" --licenses; then
             LICENSE_STATUS=0
@@ -53,7 +53,13 @@ jobs:
             exit "$LICENSE_STATUS"
           fi
 
-          "$SDKMANAGER" --install "platforms;android-37"
+          "$SDKMANAGER" --install "platforms;android-37.0"
+
+          if [ ! -e "$SDK_ROOT/platforms/android-37" ]; then
+            ln -s "$SDK_ROOT/platforms/android-37.0" \
+                  "$SDK_ROOT/platforms/android-37"
+          fi
+      
       
 
       - name: Set up Gradle
