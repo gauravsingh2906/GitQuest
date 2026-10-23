@@ -3,11 +3,9 @@ name: Android CI
 
 on:
   push:
-    branches:
-      - master
+    branches: [master]
   pull_request:
-    branches:
-      - master
+    branches: [master]
   workflow_dispatch:
 
 permissions:
@@ -28,13 +26,20 @@ jobs:
           distribution: temurin
           java-version: '21'
 
-      - name: Set up Android SDK
-        uses: android-actions/setup-android@v3
-
-      - name: Install Android SDK Platform 37
+      - name: Locate Android SDK tools and install API 37
         shell: bash
         run: |
-          "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --install "platforms;android-37"
+          SDK_ROOT="${ANDROID_HOME:-${ANDROID_SDK_ROOT:-/usr/local/lib/android/sdk}}"
+          SDKMANAGER="$(find "$SDK_ROOT/cmdline-tools" -type f -name sdkmanager -print -quit)"
+
+          if [ -z "$SDKMANAGER" ]; then
+            echo "ERROR: sdkmanager was not found under $SDK_ROOT/cmdline-tools"
+            exit 1
+          fi
+
+          echo "Using SDK manager: $SDKMANAGER"
+          yes | "$SDKMANAGER" --licenses
+          "$SDKMANAGER" --install "platforms;android-37"
 
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
