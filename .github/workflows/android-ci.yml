@@ -38,8 +38,23 @@ jobs:
           fi
 
           echo "Using SDK manager: $SDKMANAGER"
-          yes | "$SDKMANAGER" --licenses
+
+          # Ignore yes's broken-pipe status, but preserve sdkmanager's result.
+          set +o pipefail
+          if yes | "$SDKMANAGER" --licenses; then
+            LICENSE_STATUS=0
+          else
+            LICENSE_STATUS=$?
+          fi
+          set -o pipefail
+
+          if [ "$LICENSE_STATUS" -ne 0 ]; then
+            echo "ERROR: Android SDK license acceptance failed."
+            exit "$LICENSE_STATUS"
+          fi
+
           "$SDKMANAGER" --install "platforms;android-37"
+      
 
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
