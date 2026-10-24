@@ -12,3 +12,7 @@ Learning how Git combines branches.
 
 ## Purpose
 Practise commits, branches, pull requests, and code reviews.
+
+## CI/CD Practice
+
+This section is for practising GitHub Actions pull request workflows.
