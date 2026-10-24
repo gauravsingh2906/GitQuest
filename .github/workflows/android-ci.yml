@@ -1,12 +1,32 @@
 
 name: Android CI
 
+
 on:
   push:
     branches: [master]
+    paths:
+      - 'app/**'
+      - 'gradle/**'
+      - '*.gradle.kts'
+      - 'gradle.properties'
+      - 'gradlew'
+      - 'gradlew.bat'
+      - '.github/workflows/**'
+
   pull_request:
     branches: [master]
+    paths:
+      - 'app/**'
+      - 'gradle/**'
+      - '*.gradle.kts'
+      - 'gradle.properties'
+      - 'gradlew'
+      - 'gradlew.bat'
+      - '.github/workflows/**'
+
   workflow_dispatch:
+
 
 permissions:
   contents: read
