@@ -1,3 +1,4 @@
+
 name: Android Release
 
 on:
@@ -10,7 +11,7 @@ permissions:
 
 jobs:
   release:
-    name: Build and publish Android release
+    name: Build and publish signed Android release
     runs-on: ubuntu-latest
 
     steps:
@@ -45,14 +46,37 @@ jobs:
                   "$SDK_ROOT/platforms/android-37"
           fi
 
+      - name: Restore signing keystore
+        env:
+          ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          KEYSTORE_PATH="$RUNNER_TEMP/gutquest.jks"
+
+          if [ -z "$ANDROID_KEYSTORE_BASE64" ]; then
+            echo "ERROR: Keystore secret is missing."
+            exit 1
+          fi
+
+          printf '%s' "$ANDROID_KEYSTORE_BASE64" | base64 --decode > "$KEYSTORE_PATH"
+
+          test -s "$KEYSTORE_PATH"
+          echo "ANDROID_KEYSTORE_PATH=$KEYSTORE_PATH" >> "$GITHUB_ENV"
+
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
 
-      - name: Build release APK
-        run: ./gradlew assembleDebug
+      - name: Build signed release AAB
+        env:
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: ./gradlew bundleRelease
 
       - name: Publish GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           generate_release_notes: true
-          files: app/build/outputs/apk/debug/app-debug.apk
+          files: app/build/outputs/bundle/release/app-release.aab
